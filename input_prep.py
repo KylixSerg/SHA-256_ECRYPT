@@ -1,8 +1,8 @@
 def prep_input(input):
     # convert input to binary and pad with 1 
-    binInput =   (' '.join(format(ord(x), 'b').rjust(8, '0') for x in input) + " 1").replace(" ","")
-    input_length_bin = len(binInput)-1 # get length of the bin version of the input
-    return pad_zeros(binInput) + add_big_end_length(input_length_bin)
+    bin_input =   (' '.join(format(ord(x), 'b').rjust(8, '0') for x in input) + " 1").replace(" ","")
+    input_length_bin = len(bin_input)-1 # get length of the bin version of the input
+    return pad_zeros(bin_input) + add_big_end_length(input_length_bin)
 
 # helper methods 
 def pad_zeros(input):
