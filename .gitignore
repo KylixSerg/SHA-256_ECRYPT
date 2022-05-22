@@ -1,1 +1,2 @@
 # add files you dont want commited to the repo
+*.pyc
