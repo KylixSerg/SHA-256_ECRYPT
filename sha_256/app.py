@@ -1,3 +1,5 @@
+import hashlib
+from http.client import ImproperConnectionState
 from sha_256.compression import perform_chunk_compression, perform_hash
 from sha_256.input_prep import prep_input
 from sha_256.message_schedule import parse_512_chunks, parse_32bit_words, convert_chunk_to_message_schedule, perform_modular_addition
@@ -43,3 +45,4 @@ def perform_sha256(string_to_hash):
 
 
     return perform_hash([h0,h1,h2,h3,h4,h5,h6,h7])
+

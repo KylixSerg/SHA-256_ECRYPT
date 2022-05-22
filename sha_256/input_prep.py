@@ -2,6 +2,8 @@
 params: hash-input
 returns: return binary of the hash-input with length multiple to 512.
 '''
+import math
+from typing import MutableMapping
 def prep_input(input):
     # convert input to binary and pad with 1 
     bin_input =   (' '.join(format(ord(x), 'b').rjust(8, '0') for x in input) + " 1").replace(" ","")
@@ -14,12 +16,14 @@ params: initial binary version of the input + (1 as a bit), length varies depend
 returns: retuns input padded with zeros where the length is the nearest multiple of 512
          or the one after it in case the prev one has length diff with input < 64
 '''
-def pad_zeros(input):
-    five_twelve_multiple = (len(input) // 512 + 1) * 512 # length of the highest string
-    if(five_twelve_multiple - len(input)< 64):
-        five_twelve_multiple += 512
-    five_twelve_multiple -= 64
-    return input.ljust(five_twelve_multiple, '0')
+def pad_zeros(input):    
+    multiple = math.floor(len(input) /512) + 1
+    multiple *= 512
+    end = len(input)
+    if(len(input) + 64 > multiple):
+        multiple += 512
+    output = input.ljust(multiple - 64, '0')
+    return output
 
 # helper methods
 '''

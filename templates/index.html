@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHA256</title>
+</head>
+<body>
+<table>
+
+    <thead>
+
+        <tr>
+            <td>
+                <label for="w3reviewinput">Enter the value you want to hash:</label>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <textarea id="w3reviewinput" style="font-size: 1rem ;" name="w3review" rows="20" cols="50" ></textarea>
+        </td>
+
+        <td>
+            <textarea id="w3review" style="font-size: 1rem ;" name="w3review" rows="10" cols="50" disabled placeholder="Developed program">{{ input }}</textarea>
+            <textarea id="w3review2" style="font-size: 1rem ;" name="w3review" rows="10" cols="50" disabled placeholder="Python built-in hashlib">{{ input }}</textarea>
+        </td>
+        <tr>
+            <td><button id="btn" style="font-size: 1.5rem ;">Hash the input </button></td>
+        </tr>
+        
+ 
+    </tbody>
+</table>
+<script>
+const btn = document.getElementById('btn');
+
+btn.addEventListener('click', async function handleClick() {
+  
+  const input_to_hash = document.getElementById('w3reviewinput').value;
+  const res = await fetch('http://localhost:5000/hash', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({string_to_hash: input_to_hash})
+  });
+  const data = await res.json();
+  if(data.hashed !== data.expected){
+      alert("Wrong program output!")
+  }
+  document.getElementById('w3review').innerText = `${data.hashed}`
+  document.getElementById('w3review2').innerText = `${data.expected}`
+});
+
+</script>
+    
+</body>
+</html>
