@@ -1,3 +1,7 @@
+'''
+constants that represent the first 32 bits of the fractional parts of 
+the square roots of the first 8 primes: 2, 3, 5, 7, 11, 13, 17, 19
+'''
 H0 = '6a09e667'
 H1 = 'bb67ae85'
 H2 = '3c6ef372'
@@ -7,6 +11,10 @@ H5 = '9b05688c'
 H6 = '1f83d9ab'
 H7 = '5be0cd19'
 
+'''
+constants, Each value (0-63) is the first 32 
+bits of the fractional parts of the cube roots of the first 64 primes (2 - 311).
+'''
 ROUND_CONSTS = ['428a2f98', '71374491', 
 'b5c0fbcf', 'e9b5dba5', '3956c25b', '59f111f1', '923f82a4', 
 'ab1c5ed5','d807aa98', '12835b01', '243185be', '550c7dc3', 

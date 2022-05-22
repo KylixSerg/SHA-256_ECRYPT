@@ -1,6 +1,36 @@
-from message_schedule import *
-from consts import *
+'''
+compression:
+for every word in the 64-32bit long chunk perform:
 
+Initialize variables a, b, c, d, e, f, g, h and set them equal to the current hash values respectively. h0, h1, h2, h3, h4, h5, h6, h7
+Run the compression loop. The compression loop will mutate the values of a…h. The compression loop is as follows:
+for i from 0 to 63
+S1 = (e rightrotate 6) xor (e rightrotate 11) xor (e rightrotate 25)
+ch = (e and f) xor ((not e) and g)
+temp1 = h + S1 + ch + k[i] + w[i]
+S0 = (a rightrotate 2) xor (a rightrotate 13) xor (a rightrotate 22)
+maj = (a and b) xor (a and c) xor (b and c)
+temp2 := S0 + maj
+h = g
+g = f
+f = e
+e = d + temp1
+d = c
+c = b
+b = a
+a = temp1 + temp2
+'''
+
+from sha_256.message_schedule import *
+from sha_256.consts import *
+
+'''
+params: -512bit long chunck in binary.
+        -working variables, working variables a list of vars from a-h, intialized with 
+        hard-coded constants that represent the first 32 bits of the fractional parts 
+        of the square roots of the first 8 primes: 2, 3, 5, 7, 11, 13, 17, 19
+returns: compressed 512bit chunk into mutated working variables
+'''
 def perform_chunk_compression(chunk, workign_variables):
     a = workign_variables[0]
     b = workign_variables[1]
@@ -33,6 +63,10 @@ def perform_chunk_compression(chunk, workign_variables):
     
     return [a,b,c,d,e,f,g,h]
 
+'''
+params: working values after compression
+return: concatenated hexadecimal digest represeting the sha256 output
+'''
 def perform_hash(elements):
     final_hash = "" 
     for i in range(len(elements)):
