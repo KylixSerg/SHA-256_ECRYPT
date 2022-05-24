@@ -6,6 +6,7 @@ Follow the steps below:
 optional but recommended(virtual envirenment), execute:
 
 python -m venv venv
+
 venv\Scripts\Activate.ps1
 
 required:
