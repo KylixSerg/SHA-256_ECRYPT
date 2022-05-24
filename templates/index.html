@@ -25,7 +25,10 @@
             <textarea id="w3review2" style="font-size: 1rem ;" name="w3review" rows="10" cols="100" disabled placeholder="Python built-in hashlib">{{ input }}</textarea>
         </td>
         <tr>
-            <td><button id="btn" style="font-size: 1.5rem ;">Hash the input </button></td>
+            
+            <td><button id="btn" style="font-size: 1.5rem ;">Hash </button>
+                <button id="btn2" style="font-size: 1.5rem ;">Clear </button></td>
+
         </tr>
         
  
@@ -33,6 +36,7 @@
 </table>
 <script>
 const btn = document.getElementById('btn');
+const btn2 = document.getElementById('btn2');
 
 btn.addEventListener('click', async function handleClick() {
   
@@ -50,6 +54,13 @@ btn.addEventListener('click', async function handleClick() {
   }
   document.getElementById('w3review').innerText = `${data.hashed}`
   document.getElementById('w3review2').innerText = `${data.expected}`
+});
+btn2.addEventListener('click', function handleClick() {
+  
+  document.getElementById('w3reviewinput').value = '';
+  document.getElementById('w3review').innerText = '';
+  document.getElementById('w3review2').innerText = '';
+
 });
 
 </script>
