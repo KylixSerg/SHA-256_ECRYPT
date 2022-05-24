@@ -1,5 +1,3 @@
-import hashlib
-from http.client import ImproperConnectionState
 from sha_256.compression import perform_chunk_compression, perform_hash
 from sha_256.input_prep import prep_input
 from sha_256.message_schedule import parse_512_chunks, parse_32bit_words, convert_chunk_to_message_schedule, perform_modular_addition
@@ -13,36 +11,37 @@ returns: hashed value of the input, 256-bit (32 bytes) hash value.
          represented as a hexadecimal number of 64 digits.
 '''
 def perform_sha256(string_to_hash):
-    input = parse_512_chunks(prep_input(string_to_hash))
-    h0,h1,h2,h3,h4,h5,h6,h7 = H0,H1,H2,H3,H4,H5,H6,H7
+    input = prep_input(string_to_hash)
+    input = parse_512_chunks(input)
+    
+    h0= bin(int(H0, 16)).replace('0b', '').rjust(32, '0')
+    h1= bin(int(H1, 16)).replace('0b', '').rjust(32, '0')
+    h2= bin(int(H2, 16)).replace('0b', '').rjust(32, '0')
+    h3= bin(int(H3, 16)).replace('0b', '').rjust(32, '0')
+    h4= bin(int(H4, 16)).replace('0b', '').rjust(32, '0')
+    h5= bin(int(H5, 16)).replace('0b', '').rjust(32, '0')
+    h6= bin(int(H6, 16)).replace('0b', '').rjust(32, '0')
+    h7= bin(int(H7, 16)).replace('0b', '').rjust(32, '0')
 
     for chunk in input:
-        current_chunk = parse_32bit_words(chunk)
         # convert chunk to message shedule
-        current_chunk = convert_chunk_to_message_schedule(current_chunk)
+        current_chunk = convert_chunk_to_message_schedule(parse_32bit_words(chunk))
 
         # initalize working variables
-        a = bin(int(H0, 16)).replace('0b', '').rjust(32, '0')
-        b = bin(int(H1, 16)).replace('0b', '').rjust(32, '0')
-        c = bin(int(H2, 16)).replace('0b', '').rjust(32, '0')
-        d = bin(int(H3, 16)).replace('0b', '').rjust(32, '0')
-        e = bin(int(H4, 16)).replace('0b', '').rjust(32, '0')
-        f = bin(int(H5, 16)).replace('0b', '').rjust(32, '0')
-        g = bin(int(H6, 16)).replace('0b', '').rjust(32, '0')
-        h = bin(int(H7, 16)).replace('0b', '').rjust(32, '0')
+        
 
-        compressed_chunk = perform_chunk_compression(current_chunk, [a,b,c,d,e,f,g,h])
-
+        compressed_chunk = perform_chunk_compression(current_chunk, [h0,h1,h2,h3,h4,h5,h6,h7])
+        # bug with the second iteration h0 becomes binary, when exptected hex
         # Add the compressed chunk to the current hash value:
-        h0 = perform_modular_addition([bin(int(h0, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[0]])
-        h1 = perform_modular_addition([bin(int(h1, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[1]])
-        h2 = perform_modular_addition([bin(int(h2, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[2]])
-        h3 = perform_modular_addition([bin(int(h3, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[3]])
-        h4 = perform_modular_addition([bin(int(h4, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[4]])
-        h5 = perform_modular_addition([bin(int(h5, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[5]])
-        h6 = perform_modular_addition([bin(int(h6, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[6]])
-        h7 = perform_modular_addition([bin(int(h7, 16)).replace('0b', '').rjust(32, '0'), compressed_chunk[7]])
+        h0 = perform_modular_addition([h0, compressed_chunk[0]])
+        h1 = perform_modular_addition([h1, compressed_chunk[1]])
+        h2 = perform_modular_addition([h2, compressed_chunk[2]])
+        h3 = perform_modular_addition([h3, compressed_chunk[3]])
+        h4 = perform_modular_addition([h4, compressed_chunk[4]])
+        h5 = perform_modular_addition([h5, compressed_chunk[5]])
+        h6 = perform_modular_addition([h6, compressed_chunk[6]])
+        h7 = perform_modular_addition([h7, compressed_chunk[7]])
 
-
+        
     return perform_hash([h0,h1,h2,h3,h4,h5,h6,h7])
 

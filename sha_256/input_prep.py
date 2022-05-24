@@ -3,7 +3,6 @@ params: hash-input
 returns: return binary of the hash-input with length multiple to 512.
 '''
 import math
-from typing import MutableMapping
 def prep_input(input):
     # convert input to binary and pad with 1 
     bin_input =   (' '.join(format(ord(x), 'b').rjust(8, '0') for x in input) + " 1").replace(" ","")

@@ -31,7 +31,7 @@ params: -512bit long chunck in binary.
         of the square roots of the first 8 primes: 2, 3, 5, 7, 11, 13, 17, 19
 returns: compressed 512bit chunk into mutated working variables
 '''
-def perform_chunk_compression(chunk, workign_variables):
+def perform_chunk_compression(chunk_message, workign_variables):
     a = workign_variables[0]
     b = workign_variables[1]
     c = workign_variables[2]
@@ -40,6 +40,7 @@ def perform_chunk_compression(chunk, workign_variables):
     f = workign_variables[5]
     g = workign_variables[6]
     h = workign_variables[7]
+    chunk = chunk_message
 
     for i in range(len(chunk)):
        S1 = perform_xor_3(right_rotate(e,6),right_rotate(e,11),right_rotate(e,25)) 

@@ -1,4 +1,3 @@
-from json import loads
 from sha_256.app import perform_sha256
 from flask import Flask, render_template, request, jsonify
 import hashlib
