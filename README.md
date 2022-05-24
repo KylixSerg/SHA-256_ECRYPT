@@ -12,7 +12,7 @@ venv\Scripts\Activate.ps1
 required:
 pip install requirements.txt(installs all needed dependencies).
 
-Now run the server.py file to open the app on the browser. PORT:500
+Now run the server.py file to open the app on the browser. PORT:5000
 PORT can be changed in server.py in line 20, replace with app.run(debug=True, Port=YOUR_PORT)
 
 
